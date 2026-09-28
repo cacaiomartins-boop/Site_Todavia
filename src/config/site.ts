@@ -1,0 +1,102 @@
+import catianePhoto from "@/assets/catiane-matiello.jpg";
+import marceloPhoto from "@/assets/marcelo-barbosa-vieira.jpg";
+
+export const site = {
+  name: "Todavia Psicanálise",
+  shortName: "Todavia",
+  city: "Curitiba",
+  region: "PR",
+  eyebrow: "Clínica de psicanálise em Curitiba · atendimento online",
+  heroTitle: "Há palavras que só chegam quando encontram tempo.",
+  heroText:
+    "Um lugar para escutar o que se repete, sustentar perguntas e construir outras formas de lidar com o próprio desejo.",
+  intro:
+    "Na Todavia, a análise parte da singularidade de cada pessoa. Não oferecemos respostas prontas: acompanhamos, com atenção e rigor, o que pode ser dito e elaborado ao longo do processo.",
+  note: "Conteúdo institucional provisório — sujeito a revisão pela clínica.",
+  address: "Rua Buenos Aires, 466 - Main Offices - Sala 112 - Batel - Curitiba - PR",
+  whatsapp: {
+    number: "5519999481965",
+    message: "Olá! Gostaria de agendar uma consulta na Todavia Psicanálise.",
+  },
+  audiences: [
+    { title: "Ansiedade e angústia", text: "Quando a inquietação ocupa espaço demais ou parece não ter nome." },
+    { title: "Relações e vínculos", text: "Quando os mesmos impasses retornam nas escolhas, afetos e separações." },
+    { title: "Trabalho e esgotamento", text: "Quando as exigências se acumulam e já não é simples reconhecer limites." },
+    { title: "Luto e mudanças", text: "Quando uma perda, uma ruptura ou uma transição pede tempo para ser elaborada." },
+    { title: "Adolescência", text: "Quando transformações, conflitos e perguntas precisam encontrar escuta." },
+    { title: "Autoconhecimento", text: "Quando surge o desejo de compreender melhor a própria história e escolhas." },
+  ],
+  professionals: [
+    {
+      slug: "marcelo-barbosa-vieira",
+      name: "Marcelo Barbosa Vieira",
+      role: "Psicanalista",
+      specialty: "Psicanálise lacaniana · Adolescentes e adultos",
+      image: marceloPhoto,
+      imageAlt: "Retrato de Marcelo Barbosa Vieira",
+      location: "Curitiba, PR",
+      formats: "Presencial e online",
+      audience: "Adolescentes e adultos",
+      approach: "Psicanálise lacaniana",
+      bio: "Doutor em Filosofia pela UFSCar, com período na Université Paris 1 Panthéon-Sorbonne. Membro da Associação Psicanalítica de Curitiba.",
+      education: [
+        "Doutorado em Filosofia — UFSCar (2017), com período na Université Paris 1 Panthéon-Sorbonne",
+        "Formação em psicanálise — Associação Psicanalítica de Curitiba (APC)",
+        "Graduação e formação complementar — UFPR",
+      ],
+      experience:
+        "Em consultório particular desde 2017. Membro da Associação Psicanalítica de Curitiba, atuando em sessões clínicas e nos núcleos de formação e direção. Foi professor universitário na UFPR (2013–2015) e na UTFPR (2017–2019). Integra o Coletivo Psi Social desde 2020.",
+      focusAreas: [
+        "Ansiedade e ataques de pânico",
+        "Depressão",
+        "TOC",
+        "Questões psicossomáticas",
+        "Dificuldades de relacionamento",
+        "Comportamentos de risco",
+      ],
+      ages: "A partir de 12 anos",
+      url: "https://www.doctoralia.com.br/marcelo-barbosa-vieira/psicanalista/curitiba",
+      source: "Perfil no Doctoralia",
+    },
+    {
+      slug: "catiane-matiello",
+      name: "Catiane Matiello",
+      role: "Psicanalista",
+      specialty: "Psicanálise · Adolescentes e adultos",
+      image: catianePhoto,
+      imageAlt: "Retrato de Catiane Matiello",
+      location: "Batel · Curitiba, PR",
+      formats: "Presencial e online",
+      audience: "Adolescentes e adultos",
+      approach: "Psicanálise",
+      bio: "Psicanalista em formação permanente na Associação Psicanalítica de Curitiba. Graduada em História, especialista em Literatura Brasileira e História e doutora em Tecnologia e Sociedade.",
+      education: [
+        "Graduação em História — UEPG (2004)",
+        "Especialização em Literatura Brasileira e História — UTFPR (2008)",
+        "Doutorado em Tecnologia e Sociedade — UTFPR (2016)",
+        "Formação em psicanálise — Associação Psicanalítica de Curitiba (APC)",
+      ],
+      experience:
+        "Em análise pessoal desde 2010 e em prática clínica desde 2019. Participa de seminários, grupos de estudo e cartéis pela APC e pela Clareira Psicanálise. Também é professora na Universidade Estadual do Paraná.",
+      focusAreas: [],
+      ages: "13 a 18 anos (adolescentes) e 19 a 59 anos (adultos)",
+      url: "https://psisocial.com/analista/catiane-matiello/",
+      source: "Perfil no Psi Social",
+    },
+  ],
+  steps: [
+    { title: "Primeiro contato", text: "Você escolhe um profissional e acessa o perfil indicado para iniciar a conversa." },
+    { title: "Horário e formato", text: "A disponibilidade, o atendimento presencial ou online e os valores são combinados diretamente." },
+    { title: "Primeira sessão", text: "Um encontro inicial para falar sobre o que motivou a procura e conhecer a forma de trabalho." },
+    { title: "Continuidade", text: "A frequência e os próximos passos são construídos com cada profissional." },
+  ],
+  faqs: [
+    { question: "Como escolher um profissional?", answer: "Leia as apresentações e visite os perfis profissionais. O primeiro contato também pode ajudar a perceber com quem você deseja iniciar uma conversa." },
+    { question: "O atendimento pode ser online?", answer: "Sim. Os dois profissionais informam atendimento online e presencial em Curitiba. Confirme horários e condições diretamente no perfil escolhido." },
+    { question: "Quanto tempo dura uma sessão?", answer: "A duração é definida por cada profissional. Consulte essa informação no primeiro contato." },
+    { question: "Qual é a frequência das sessões?", answer: "A frequência é conversada entre paciente e analista, considerando cada caso e o momento do processo." },
+    { question: "Como funcionam valores e pagamentos?", answer: "Valores e formas de pagamento não foram informados nesta página. Eles devem ser consultados diretamente com o profissional." },
+    { question: "O que é dito em sessão é sigiloso?", answer: "O trabalho clínico é orientado pelo sigilo. Questões específicas podem ser conversadas no primeiro encontro." },
+    { question: "Como começo?", answer: "Escolha um dos profissionais e use o botão de acesso ao perfil. Lá você encontra o canal disponível para contato ou agendamento." },
+  ],
+} as const;
