@@ -72,6 +72,16 @@ function ProfessionalPage() {
               <span className="text-sm text-moss">Informações pelo {professional.source}</span>
             </div>
 
+            {professional.extraLinks?.length ? (
+              <div className="mt-5 flex flex-wrap gap-2">
+                {professional.extraLinks.map((link) => (
+                  <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full border border-sand bg-paper px-4 py-1.5 text-sm text-moss transition-colors hover:border-terracotta hover:text-terracotta">
+                    {link.label} <ArrowUpRight size={14} strokeWidth={1.5} />
+                  </a>
+                ))}
+              </div>
+            ) : null}
+
             {professional.education?.length ? (
               <div className="mt-10 border-t border-sand pt-7">
                 <p className="section-label flex items-center gap-2 text-rust"><GraduationCap size={16} strokeWidth={1.6} /> Formação</p>

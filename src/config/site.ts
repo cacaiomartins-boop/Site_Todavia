@@ -6,14 +6,18 @@ export const site = {
   shortName: "Todavia",
   city: "Curitiba",
   region: "PR",
-  eyebrow: "Clínica de psicanálise em Curitiba · atendimento online",
+  eyebrow: "Clínica de psicanálise em Curitiba · atendimento online e presencial",
   heroTitle: "Há palavras que só chegam quando encontram tempo.",
   heroText:
     "Um lugar para escutar o que se repete, sustentar perguntas e construir outras formas de lidar com o próprio desejo.",
-  intro:
-    "Na Todavia, a análise parte da singularidade de cada pessoa. Não oferecemos respostas prontas: acompanhamos, com atenção e rigor, o que pode ser dito e elaborado ao longo do processo.",
+  introParagraphs: [
+    "Você se sente preso em um ciclo de ansiedade ou depressão? Ou talvez, após alcançar seus objetivos, um vazio persistente o faça questionar \"o que vem depois\"? Em nossa vida, é comum nos depararmos com a dificuldade de realizar o que desejamos ou com a sensação de \"estar perdido\" mesmo diante de grandes conquistas.",
+    "Na psicanálise, compreendemos que o desejo é o centro dessas questões. Vivemos em um tempo onde a busca incessante por satisfação pode, paradoxalmente, nos esgotar e limitar nossa capacidade de nos reconectar com a vida e promover transformações internas genuínas.",
+    "Nossa prática se dedica a explorar esses horizontes, oferecendo um espaço seguro para que você possa entender e lidar com vários desafios. O objetivo é fortalecer seu desejo e reconectá-lo à sua potência de vida.",
+  ],
   note: "Conteúdo institucional provisório — sujeito a revisão pela clínica.",
   address: "Rua Buenos Aires, 466 - Main Offices - Sala 112 - Batel - Curitiba - PR",
+  instagram: "https://www.instagram.com/todaviapsicanalise?stkn=aTV2ZWhmOW1hODFq&utm_source=qr",
   whatsapp: {
     number: "5519999481965",
     message: "Olá! Gostaria de agendar uma consulta na Todavia Psicanálise.",
@@ -57,6 +61,11 @@ export const site = {
       ages: "A partir de 12 anos",
       url: "https://www.doctoralia.com.br/marcelo-barbosa-vieira/psicanalista/curitiba",
       source: "Perfil no Doctoralia",
+      extraLinks: [
+        { label: "Currículo Lattes", url: "http://lattes.cnpq.br/8316324326130024" },
+        { label: "Perfil na APC", url: "https://apcwb.com/profissional/marcelo-m-barbosa-vieira/" },
+        { label: "YouTube", url: "https://www.youtube.com/@Marcelogoos" },
+      ],
     },
     {
       slug: "catiane-matiello",
@@ -82,6 +91,10 @@ export const site = {
       ages: "13 a 18 anos (adolescentes) e 19 a 59 anos (adultos)",
       url: "https://psisocial.com/analista/catiane-matiello/",
       source: "Perfil no Psi Social",
+      extraLinks: [
+        { label: "Currículo Lattes", url: "http://lattes.cnpq.br/2375317985182818" },
+        { label: "Perfil na APC", url: "https://apcwb.com/profissional/catiane/" },
+      ],
     },
   ],
   steps: [

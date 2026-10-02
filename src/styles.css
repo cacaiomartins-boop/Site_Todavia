@@ -187,8 +187,13 @@
 .hero-enter + .hero-enter { animation-delay: .18s; }
 @keyframes hero-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 @media (min-width: 768px) { .site-container { width: min(100% - 5rem, 1240px); } }
+#escuta { padding-block: 3.5rem; }
+#escuta .section-title { font-size: 2.3rem; }
 @media (min-width: 1024px) {
   .section-space { padding-block: 4.5rem; }
   .section-title { font-size: clamp(2.7rem, 4vw, 3.75rem); }
+  #escuta { padding-block: 3.75rem; }
+  #escuta .section-title { font-size: 2.6rem; }
+  #escuta .site-container { max-width: 1000px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; } .reveal-ready [data-reveal] { opacity: 1; transform: none; } }
