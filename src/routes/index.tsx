@@ -37,6 +37,7 @@ function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const heroImgRef = useRef<HTMLImageElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.documentElement.classList.add("reveal-ready");
@@ -45,6 +46,10 @@ function Index() {
     let ticking = false;
     const applyScrollEffects = () => {
       setScrolled(window.scrollY > 48);
+      if (progressRef.current) {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        progressRef.current.style.transform = `scaleX(${max > 0 ? Math.min(window.scrollY / max, 1) : 0})`;
+      }
       if (heroImgRef.current && !reduceMotion) {
         const offset = Math.min(window.scrollY * 0.15, 140);
         heroImgRef.current.style.transform = `scale(1.12) translate3d(0, ${offset}px, 0)`;
@@ -61,7 +66,12 @@ function Index() {
     window.addEventListener("scroll", onScroll, { passive: true });
 
     const observer = new IntersectionObserver(
-      (entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("is-visible")),
+      (entries) => entries.filter((entry) => entry.isIntersecting).forEach((entry, index) => {
+        const target = entry.target as HTMLElement;
+        target.style.transitionDelay = `${index * 130}ms`;
+        target.classList.add("is-visible");
+        window.setTimeout(() => { target.style.transitionDelay = ""; }, 1400 + index * 130);
+      }),
       { threshold: 0.08 },
     );
     document.querySelectorAll("[data-reveal]").forEach((element) => observer.observe(element));
@@ -69,12 +79,13 @@ function Index() {
   }, []);
 
   return (
-    <main className="overflow-x-hidden bg-background text-foreground">
+    <main className="overflow-x-clip bg-background text-foreground">
+      <div ref={progressRef} aria-hidden="true" className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-terracotta" style={{ transform: "scaleX(0)" }} />
       <header className={`fixed inset-x-0 top-0 z-50 border-b transition-all ${scrolled || menuOpen ? "border-sand bg-linen/95 text-foreground backdrop-blur-md" : "border-transparent text-paper"}`}>
         <div className="site-container flex h-20 items-center justify-between">
           <a href="#topo"><img src={logo} alt="Todavia Psicanálise" className={`h-auto w-28 transition ${scrolled || menuOpen ? "" : "logo-invert"}`} /></a>
           <nav className="hidden items-center gap-7 lg:flex" aria-label="Navegação principal">
-            {links.map(([label, href]) => <a key={href} href={href} className="text-sm transition-opacity hover:opacity-60">{label}</a>)}          </nav>
+            {links.map(([label, href]) => <a key={href} href={href} className="relative text-sm after:absolute after:inset-x-0 after:-bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100">{label}</a>)}          </nav>
           <Button type="button" variant="ghost" size="icon" aria-label={menuOpen ? "Fechar menu" : "Abrir menu"} className="lg:hidden" onClick={() => setMenuOpen((value) => !value)}>{menuOpen ? <X /> : <Menu />}</Button>
         </div>
         {menuOpen && <nav className="border-t border-sand bg-linen px-5 py-6 text-foreground lg:hidden">{links.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)} className="block border-b border-sand py-4 font-display text-2xl">{label}</a>)}</nav>}
@@ -83,12 +94,13 @@ function Index() {
       <section id="topo" className="relative flex min-h-[92svh] items-end overflow-hidden bg-forest pt-32 text-paper lg:min-h-[78vh] lg:pt-28">
         <img ref={heroImgRef} src={heroPhoto} alt="" aria-hidden="true" fetchPriority="high" className="absolute inset-0 h-full w-full origin-center object-cover opacity-50 will-change-transform" style={{ transform: "scale(1.12)" }} />
         <div className="absolute inset-0 bg-gradient-to-t from-forest/75 via-forest/55 to-forest/35" aria-hidden="true" />
+        <div className="glow-drift pointer-events-none absolute -left-24 top-1/4 h-[28rem] w-[28rem] rounded-full bg-sage/20 blur-3xl" aria-hidden="true" />
         <div className="site-container relative z-10 grid items-end gap-12 pb-12 md:pb-16 lg:gap-8 lg:pb-10 lg:grid-cols-[1.25fr_.75fr]">
           <div className="max-w-4xl hero-enter">
             <p className="section-label mb-6 text-sage">{site.eyebrow}</p>
             <h1 className="max-w-4xl font-display text-[clamp(3.2rem,7.5vw,7rem)] leading-[0.94] lg:text-[clamp(3.2rem,5.5vw,5.5rem)]">Há palavras que só chegam quando encontram <em className="text-sage">tempo.</em></h1>
             <p className="mt-7 max-w-2xl text-lg leading-relaxed text-paper/80 lg:mt-5">{site.heroText}</p>
-            <div className="mt-9 flex flex-wrap gap-3 lg:mt-6"><Button asChild variant="paper" size="lg"><a href="#profissionais">Conhecer profissionais <ArrowDown /></a></Button></div>
+            <div className="mt-9 flex flex-wrap gap-3 lg:mt-6"><Button asChild variant="paper" size="lg"><a href="#profissionais">Conhecer profissionais <ArrowDown className="nudge-down" /></a></Button></div>
           </div>
           <aside className="hero-enter">
             <div className="border-l border-sage/50 pl-6">
@@ -97,7 +109,7 @@ function Index() {
             </div>
             <div className="mt-8 hidden max-w-xs rounded-[20px] border border-sage/30 bg-forest/50 p-6 backdrop-blur-sm lg:block">
               <div className="flex items-center gap-1 text-terracotta-light" aria-label="Avaliação 5 estrelas">
-                {Array.from({ length: 5 }).map((_, index) => <Star key={index} size={16} strokeWidth={0} fill="currentColor" />)}
+                {Array.from({ length: 5 }).map((_, index) => <Star key={index} size={16} strokeWidth={0} fill="currentColor" className="star-pop" style={{ animationDelay: `${0.6 + index * 0.12}s` }} />)}
               </div>
               <p className="mt-2 text-sm text-paper/80">Avaliação 5 estrelas nos perfis dos profissionais</p>
               <dl className="mt-5 space-y-3 border-t border-sage/25 pt-5 text-sm text-paper/85">
@@ -118,7 +130,7 @@ function Index() {
             { icon: Monitor, label: "Online e presencial" },
             { icon: Users, label: "Adolescentes e adultos" },
           ].map(({ icon: Icon, label }) => (
-            <span key={label} className="inline-flex items-center gap-2 rounded-full border border-sand bg-linen px-4 py-2 text-xs font-medium text-moss sm:text-sm">
+            <span key={label} className="inline-flex items-center gap-2 rounded-full border border-sand bg-linen px-4 py-2 text-xs font-medium text-moss transition duration-300 hover:-translate-y-0.5 hover:border-terracotta sm:text-sm">
               <Icon size={14} strokeWidth={1.6} className="shrink-0 text-terracotta" />
               {label}
             </span>
@@ -129,7 +141,7 @@ function Index() {
       <section id="escuta" className="section-space bg-linen">
         <div className="site-container grid gap-14 lg:gap-8 lg:grid-cols-[.8fr_1.2fr]">
           <div className="self-start lg:sticky lg:top-28" data-reveal><SectionLabel>01 — A escuta</SectionLabel><h2 className="section-title mt-4 lg:mt-5">Quando algo se repete e você <em>não entende</em> por quê.</h2></div>
-          <div className="max-w-2xl space-y-4 text-base leading-relaxed text-moss lg:text-lg" data-reveal>{site.introParagraphs.map((paragraph) => <p key={paragraph.slice(0, 24)}>{paragraph}</p>)}</div>
+          <div className="max-w-2xl space-y-8 text-base leading-relaxed text-moss lg:space-y-24 lg:pb-12 lg:text-xl">{site.introParagraphs.map((paragraph) => <p key={paragraph.slice(0, 24)} data-reveal>{paragraph}</p>)}</div>
         </div>
       </section>
 
@@ -147,11 +159,11 @@ function Index() {
         </div>
       </section>
 
-      <section className="section-space bg-paper"><div className="site-container grid gap-12 lg:gap-8 lg:grid-cols-2"><div data-reveal><SectionLabel>03 — A proposta</SectionLabel><h2 className="section-title mt-5">A pressa quer concluir. A análise permite <em>continuar.</em></h2></div><div data-reveal className="border-l-2 border-terracotta pl-7"><Quote className="text-sage" strokeWidth={1.25} size={40}/><p className="mt-7 font-display text-3xl leading-snug lg:mt-5 lg:text-2xl">Não se trata de adaptar a vida a uma fórmula, mas de escutar como cada pessoa construiu seu modo de estar no mundo.</p><p className="mt-5 leading-relaxed text-moss lg:mt-4">O trabalho acontece pela palavra, pelas pausas e pelo que retorna. Cada processo tem seu tempo e suas próprias questões.</p></div></div></section>
+      <section className="section-space bg-paper lg:py-24"><div className="site-container grid gap-12 lg:gap-16 lg:grid-cols-2 lg:items-center"><div data-reveal><SectionLabel>03 — A proposta</SectionLabel><h2 className="section-title mt-5">A pressa quer concluir. A análise permite <em>continuar.</em></h2></div><div data-reveal className="border-l-2 border-terracotta pl-7"><Quote className="text-sage" strokeWidth={1.25} size={40}/><p className="mt-7 font-display text-3xl leading-snug lg:mt-5 lg:text-2xl">Não se trata de adaptar a vida a uma fórmula, mas de escutar como cada pessoa construiu seu modo de estar no mundo.</p><p className="mt-5 leading-relaxed text-moss lg:mt-4">O trabalho acontece pela palavra, pelas pausas e pelo que retorna. Cada processo tem seu tempo e suas próprias questões.</p></div></div></section>
 
-      <section id="como-funciona" className="section-space bg-forest text-paper"><div className="site-container"><div data-reveal><SectionLabel dark>04 — Como funciona</SectionLabel><h2 className="section-title mt-5 max-w-3xl">Do primeiro contato até a <em className="text-sage">continuidade.</em></h2></div><div className="mt-14 grid gap-0 md:grid-cols-2 lg:mt-10 lg:grid-cols-4">{site.steps.map((step, index) => <article data-reveal key={step.title} className="border-t border-sage/40 py-7 md:border-l md:px-6 lg:py-5 lg:first:border-l-0"><span className="font-display text-5xl text-terracotta-light lg:text-4xl">0{index + 1}</span><h3 className="mt-8 font-display text-2xl lg:mt-5 lg:text-xl">{step.title}</h3><p className="mt-3 text-sm leading-relaxed text-paper/65">{step.text}</p></article>)}</div></div></section>
+      <section id="como-funciona" className="section-space relative overflow-hidden bg-forest text-paper lg:py-24"><div className="glow-drift pointer-events-none absolute -right-32 -top-24 h-[26rem] w-[26rem] rounded-full bg-sage/15 blur-3xl" aria-hidden="true" /><div className="site-container relative"><div data-reveal><SectionLabel dark>04 — Como funciona</SectionLabel><h2 className="section-title mt-5 max-w-3xl">Do primeiro contato até a <em className="text-sage">continuidade.</em></h2></div><div className="mt-14 grid gap-0 md:grid-cols-2 lg:mt-10 lg:grid-cols-4">{site.steps.map((step, index) => <article data-reveal key={step.title} className="border-t border-sage/40 py-7 md:border-l md:px-6 lg:py-5 lg:first:border-l-0"><span className="font-display text-5xl text-terracotta-light lg:text-4xl">0{index + 1}</span><h3 className="mt-8 font-display text-2xl lg:mt-5 lg:text-xl">{step.title}</h3><p className="mt-3 text-sm leading-relaxed text-paper/65">{step.text}</p></article>)}</div></div></section>
 
-      <section className="bg-forest py-20 text-paper lg:py-14"><div className="site-container grid gap-10 lg:gap-8 lg:grid-cols-[.8fr_1fr_1fr] lg:items-start"><div data-reveal><SectionLabel dark>05 — Contato</SectionLabel><h2 className="section-title mt-5">Comece por uma <em className="text-sage">conversa.</em></h2></div><div data-reveal className="border-l border-sage/40 pl-7"><p className="font-display text-3xl leading-snug lg:text-2xl">Fale com a gente pelo WhatsApp para tirar dúvidas ou agendar uma primeira conversa.</p><div className="mt-8 flex flex-wrap items-center gap-3 lg:mt-6"><Button asChild variant="paper" size="lg"><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">Falar no WhatsApp <ArrowUpRight /></a></Button><a href={site.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram da Todavia Psicanálise" className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/40 text-paper transition-colors hover:border-sage hover:text-sage"><Instagram size={18} strokeWidth={1.5} /></a></div></div><div data-reveal className="overflow-hidden rounded-[20px] border border-sage/30 bg-forest"><a href={mapsViewUrl} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 p-5 text-sm leading-relaxed text-paper/90 transition-colors hover:text-sage"><MapPin className="mt-0.5 shrink-0" size={18} strokeWidth={1.5} /><span>{site.address}</span></a><iframe src={mapsEmbedUrl} title="Localização da Todavia Psicanálise" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-64 w-full border-0 grayscale-[15%] lg:h-52" /></div></div></section>
+      <section className="bg-linen py-20 text-foreground lg:py-24"><div className="site-container grid gap-10 lg:gap-8 lg:grid-cols-[.8fr_1fr_1fr] lg:items-start"><div data-reveal><SectionLabel>05 — Contato</SectionLabel><h2 className="section-title mt-5">Comece por uma <em>conversa.</em></h2></div><div data-reveal className="border-l-2 border-terracotta pl-7"><p className="font-display text-3xl leading-snug lg:text-2xl">Fale com a gente pelo WhatsApp para tirar dúvidas ou agendar uma primeira conversa.</p><div className="mt-8 flex flex-wrap items-center gap-3 lg:mt-6"><Button asChild size="lg" className="[&_svg]:transition-transform hover:[&_svg]:-translate-y-0.5 hover:[&_svg]:translate-x-0.5"><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">Falar no WhatsApp <ArrowUpRight /></a></Button><a href={site.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram da Todavia Psicanálise" className="flex h-11 w-11 items-center justify-center rounded-full border border-sand bg-paper text-moss transition-colors hover:border-terracotta hover:text-terracotta"><Instagram size={18} strokeWidth={1.5} /></a></div></div><div data-reveal className="overflow-hidden rounded-[20px] border border-sand bg-paper"><a href={mapsViewUrl} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 p-5 text-sm leading-relaxed text-moss transition-colors hover:text-terracotta"><MapPin className="mt-0.5 shrink-0" size={18} strokeWidth={1.5} /><span>{site.address}</span></a><iframe src={mapsEmbedUrl} title="Localização da Todavia Psicanálise" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-64 w-full border-0 grayscale-[15%] lg:h-52" /></div></div></section>
 
       <footer className="border-t border-sage/30 bg-forest py-10 text-paper"><div className="site-container"><div className="grid gap-8 md:grid-cols-3"><div><img src={logo} alt="Todavia Psicanálise" className="logo-invert h-auto w-44"/><p className="mt-4 text-xs text-paper/55">{site.note}</p></div><div className="text-sm text-paper/65"><p>Curitiba · Paraná</p><p>Atendimento presencial e online</p></div><nav className="flex flex-col gap-2 text-sm md:items-end">{links.map(([label, href]) => <a key={href} href={href}>{label}</a>)}<a href={site.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5"><Instagram size={14} strokeWidth={1.5} /> Instagram</a></nav></div><div className="mt-10 flex flex-col justify-between gap-3 border-t border-sage/30 pt-6 text-xs text-paper/50 md:flex-row"><span>© 2026 · Todavia Psicanálise</span><span>Em caso de emergência, ligue 188 (CVV) ou 192 (SAMU).</span></div></div></footer>
     </main>

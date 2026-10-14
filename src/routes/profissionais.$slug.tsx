@@ -51,10 +51,10 @@ function ProfessionalPage() {
 
       <section className="section-space">
         <div className="site-container grid items-start gap-12 lg:grid-cols-[.88fr_1.12fr] lg:gap-20">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-[20px] bg-sand">
+          <div className="hero-enter relative aspect-[4/5] overflow-hidden rounded-[20px] bg-sand">
             <img src={professional.image} alt={professional.imageAlt} className="h-full w-full object-cover" />
           </div>
-          <div>
+          <div className="hero-enter">
             <p className="section-label text-rust">Profissional Todavia</p>
             <h1 className="mt-5 max-w-3xl font-display text-[clamp(3.2rem,6vw,6rem)] leading-[.96]">{professional.name}</h1>
             <p className="mt-5 text-sm font-medium uppercase tracking-[0.16em] text-rust">{professional.specialty}</p>
