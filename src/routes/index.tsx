@@ -3,7 +3,7 @@ import { ArrowDown, ArrowRight, ArrowUpRight, Brain, Clock, Instagram, MapPin, M
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { site } from "@/config/site";
-import logo from "@/assets/todavia-logo-transparent.png";
+import logo from "@/assets/todavia-logo-original.png";
 import heroPhoto from "@/assets/sala-atendimento.jpg";
 
 const mapQuery = encodeURIComponent(site.address);
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/")({
 });
 
 const links = [
-  ["Escuta", "#escuta"], ["Profissionais", "#profissionais"], ["Como funciona", "#como-funciona"], ["Dúvidas", "#duvidas"],
+  ["Escuta", "#escuta"], ["Profissionais", "#profissionais"], ["Como começar", "#como-funciona"],
 ] as const;
 
 function SectionLabel({ children, dark = false }: { children: ReactNode; dark?: boolean }) {
@@ -74,9 +74,7 @@ function Index() {
         <div className="site-container flex h-20 items-center justify-between">
           <a href="#topo"><img src={logo} alt="Todavia Psicanálise" className={`h-auto w-28 transition ${scrolled || menuOpen ? "" : "logo-invert"}`} /></a>
           <nav className="hidden items-center gap-7 lg:flex" aria-label="Navegação principal">
-            {links.map(([label, href]) => <a key={href} href={href} className="text-sm transition-opacity hover:opacity-60">{label}</a>)}
-            <Button asChild variant={scrolled ? "default" : "paper"}><a href="#profissionais">Escolher profissional</a></Button>
-          </nav>
+            {links.map(([label, href]) => <a key={href} href={href} className="text-sm transition-opacity hover:opacity-60">{label}</a>)}          </nav>
           <Button type="button" variant="ghost" size="icon" aria-label={menuOpen ? "Fechar menu" : "Abrir menu"} className="lg:hidden" onClick={() => setMenuOpen((value) => !value)}>{menuOpen ? <X /> : <Menu />}</Button>
         </div>
         {menuOpen && <nav className="border-t border-sand bg-linen px-5 py-6 text-foreground lg:hidden">{links.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)} className="block border-b border-sand py-4 font-display text-2xl">{label}</a>)}</nav>}
@@ -130,8 +128,8 @@ function Index() {
 
       <section id="escuta" className="section-space bg-linen">
         <div className="site-container grid gap-14 lg:gap-8 lg:grid-cols-[.8fr_1.2fr]">
-          <div className="self-start lg:sticky lg:top-28" data-reveal><SectionLabel>01 — A escuta</SectionLabel><h2 className="section-title mt-4 lg:mt-5">Quando algo se repete e você <em>não entende</em> por quê.</h2><div className="mt-5 max-w-md space-y-3 text-base leading-relaxed text-moss lg:mt-4 lg:max-w-lg lg:space-y-3 lg:text-[0.95rem] lg:leading-relaxed">{site.introParagraphs.map((paragraph) => <p key={paragraph.slice(0, 24)}>{paragraph}</p>)}</div></div>
-          <div className="border-t border-sand">{site.audiences.map((item, index) => <article key={item.title} data-reveal className="grid gap-3 border-b border-sand py-5 sm:grid-cols-[4rem_1fr] lg:grid-cols-[5rem_1fr] lg:gap-2.5 lg:py-4"><span className="font-display text-3xl text-terracotta lg:text-[1.65rem]">{String(index + 1).padStart(2, "0")}</span><div><h3 className="font-display text-xl">{item.title}</h3><p className="mt-1 leading-relaxed text-moss lg:mt-1 lg:text-[0.95rem]">{item.text}</p></div></article>)}</div>
+          <div className="self-start lg:sticky lg:top-28" data-reveal><SectionLabel>01 — A escuta</SectionLabel><h2 className="section-title mt-4 lg:mt-5">Quando algo se repete e você <em>não entende</em> por quê.</h2></div>
+          <div className="max-w-2xl space-y-4 text-base leading-relaxed text-moss lg:text-lg" data-reveal>{site.introParagraphs.map((paragraph) => <p key={paragraph.slice(0, 24)}>{paragraph}</p>)}</div>
         </div>
       </section>
 
@@ -140,7 +138,7 @@ function Index() {
           <div data-reveal>
             <SectionLabel>02 — Profissionais</SectionLabel>
             <h2 className="section-title mt-5">Duas escutas, um compromisso com o <em>singular.</em></h2>
-            <p className="mt-7 max-w-md text-lg leading-relaxed text-moss lg:mt-5">Conheça quem trabalha na Todavia. As informações abaixo foram reunidas a partir dos perfis públicos de cada profissional.</p>
+            <p className="mt-7 max-w-md text-lg leading-relaxed text-moss lg:mt-5">Conheça quem trabalha na Todavia.</p>
             <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-terracotta transition-colors hover:text-rust"><Instagram size={16} strokeWidth={1.5} /> Siga a Todavia no Instagram</a>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:gap-6">
@@ -153,9 +151,7 @@ function Index() {
 
       <section id="como-funciona" className="section-space bg-forest text-paper"><div className="site-container"><div data-reveal><SectionLabel dark>04 — Como funciona</SectionLabel><h2 className="section-title mt-5 max-w-3xl">Do primeiro contato até a <em className="text-sage">continuidade.</em></h2></div><div className="mt-14 grid gap-0 md:grid-cols-2 lg:mt-10 lg:grid-cols-4">{site.steps.map((step, index) => <article data-reveal key={step.title} className="border-t border-sage/40 py-7 md:border-l md:px-6 lg:py-5 lg:first:border-l-0"><span className="font-display text-5xl text-terracotta-light lg:text-4xl">0{index + 1}</span><h3 className="mt-8 font-display text-2xl lg:mt-5 lg:text-xl">{step.title}</h3><p className="mt-3 text-sm leading-relaxed text-paper/65">{step.text}</p></article>)}</div></div></section>
 
-      <section id="duvidas" className="section-space bg-linen"><div className="site-container grid gap-14 lg:gap-10 lg:grid-cols-[.75fr_1.25fr]"><div className="self-start lg:sticky lg:top-28" data-reveal><SectionLabel>05 — Dúvidas</SectionLabel><h2 className="section-title mt-5">Perguntas <em>frequentes.</em></h2><p className="mt-6 max-w-sm leading-relaxed text-moss lg:mt-4">Para informações específicas, consulte o perfil do profissional escolhido.</p></div><div>{site.faqs.map((item, index) => <details key={item.question} open={index === 0} data-reveal className="group border-b border-sand py-6 lg:py-4"><summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-2xl lg:text-xl"><span>{item.question}</span><span className="text-rust transition-transform group-open:rotate-45">+</span></summary><p className="max-w-2xl pt-4 leading-relaxed text-moss lg:pt-3">{item.answer}</p></details>)}</div></div></section>
-
-      <section className="bg-forest py-20 text-paper lg:py-14"><div className="site-container grid gap-10 lg:gap-8 lg:grid-cols-[.8fr_1fr_1fr] lg:items-start"><div data-reveal><SectionLabel dark>06 — Contato</SectionLabel><h2 className="section-title mt-5">Comece por uma <em className="text-sage">conversa.</em></h2></div><div data-reveal className="border-l border-sage/40 pl-7"><p className="font-display text-3xl leading-snug lg:text-2xl">Fale com a gente pelo WhatsApp para tirar dúvidas ou agendar uma primeira conversa.</p><div className="mt-8 flex flex-wrap items-center gap-3 lg:mt-6"><Button asChild variant="paper" size="lg"><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">Falar no WhatsApp <ArrowUpRight /></a></Button><a href={site.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram da Todavia Psicanálise" className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/40 text-paper transition-colors hover:border-sage hover:text-sage"><Instagram size={18} strokeWidth={1.5} /></a></div></div><div data-reveal className="overflow-hidden rounded-[20px] border border-sage/30 bg-forest"><a href={mapsViewUrl} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 p-5 text-sm leading-relaxed text-paper/90 transition-colors hover:text-sage"><MapPin className="mt-0.5 shrink-0" size={18} strokeWidth={1.5} /><span>{site.address}</span></a><iframe src={mapsEmbedUrl} title="Localização da Todavia Psicanálise" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-64 w-full border-0 grayscale-[15%] lg:h-52" /></div></div></section>
+      <section className="bg-forest py-20 text-paper lg:py-14"><div className="site-container grid gap-10 lg:gap-8 lg:grid-cols-[.8fr_1fr_1fr] lg:items-start"><div data-reveal><SectionLabel dark>05 — Contato</SectionLabel><h2 className="section-title mt-5">Comece por uma <em className="text-sage">conversa.</em></h2></div><div data-reveal className="border-l border-sage/40 pl-7"><p className="font-display text-3xl leading-snug lg:text-2xl">Fale com a gente pelo WhatsApp para tirar dúvidas ou agendar uma primeira conversa.</p><div className="mt-8 flex flex-wrap items-center gap-3 lg:mt-6"><Button asChild variant="paper" size="lg"><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">Falar no WhatsApp <ArrowUpRight /></a></Button><a href={site.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram da Todavia Psicanálise" className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/40 text-paper transition-colors hover:border-sage hover:text-sage"><Instagram size={18} strokeWidth={1.5} /></a></div></div><div data-reveal className="overflow-hidden rounded-[20px] border border-sage/30 bg-forest"><a href={mapsViewUrl} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 p-5 text-sm leading-relaxed text-paper/90 transition-colors hover:text-sage"><MapPin className="mt-0.5 shrink-0" size={18} strokeWidth={1.5} /><span>{site.address}</span></a><iframe src={mapsEmbedUrl} title="Localização da Todavia Psicanálise" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-64 w-full border-0 grayscale-[15%] lg:h-52" /></div></div></section>
 
       <footer className="border-t border-sage/30 bg-forest py-10 text-paper"><div className="site-container"><div className="grid gap-8 md:grid-cols-3"><div><img src={logo} alt="Todavia Psicanálise" className="logo-invert h-auto w-44"/><p className="mt-4 text-xs text-paper/55">{site.note}</p></div><div className="text-sm text-paper/65"><p>Curitiba · Paraná</p><p>Atendimento presencial e online</p></div><nav className="flex flex-col gap-2 text-sm md:items-end">{links.map(([label, href]) => <a key={href} href={href}>{label}</a>)}<a href={site.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5"><Instagram size={14} strokeWidth={1.5} /> Instagram</a></nav></div><div className="mt-10 flex flex-col justify-between gap-3 border-t border-sage/30 pt-6 text-xs text-paper/50 md:flex-row"><span>© 2026 · Todavia Psicanálise</span><span>Em caso de emergência, ligue 188 (CVV) ou 192 (SAMU).</span></div></div></footer>
     </main>

@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight, GraduationCap, MapPin, Monitor } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { site } from "@/config/site";
-import logo from "@/assets/todavia-logo-transparent.png";
+import logo from "@/assets/todavia-logo-original.png";
 
 const whatsappUrl = `https://wa.me/${site.whatsapp.number}?text=${encodeURIComponent(site.whatsapp.message)}`;
 
@@ -50,7 +50,7 @@ function ProfessionalPage() {
       </header>
 
       <section className="section-space">
-        <div className="site-container grid items-center gap-12 lg:grid-cols-[.88fr_1.12fr] lg:gap-20">
+        <div className="site-container grid items-start gap-12 lg:grid-cols-[.88fr_1.12fr] lg:gap-20">
           <div className="relative aspect-[4/5] overflow-hidden rounded-[20px] bg-sand">
             <img src={professional.image} alt={professional.imageAlt} className="h-full w-full object-cover" />
           </div>
@@ -63,8 +63,7 @@ function ProfessionalPage() {
             <dl className="mt-10 grid gap-6 border-y border-sand py-7 sm:grid-cols-2">
               <div><dt className="section-label text-rust">Atendimento</dt><dd className="mt-2 flex items-center gap-2 text-moss"><Monitor strokeWidth={1.4} />{professional.formats}</dd></div>
               <div><dt className="section-label text-rust">Localização</dt><dd className="mt-2 flex items-center gap-2 text-moss"><MapPin strokeWidth={1.4} />{professional.location}</dd></div>
-              <div><dt className="section-label text-rust">Público</dt><dd className="mt-2 text-moss">{professional.ages ?? professional.audience}</dd></div>
-              <div><dt className="section-label text-rust">Abordagem</dt><dd className="mt-2 text-moss">{professional.approach}</dd></div>
+              <div><dt className="section-label text-rust">Público</dt><dd className="mt-2 text-moss">{professional.audience}</dd></div>
             </dl>
 
             <div className="mt-9 flex flex-wrap items-center gap-4">
